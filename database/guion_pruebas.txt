@@ -1,0 +1,101 @@
+# ===== GUION DE PRUEBA DE EXTREMO A EXTREMO (usa los datos de CARGARDEMO) =====
+# Ejecutar:  main.SimuladorComandos database/guion_pruebas.txt   (sin correo)
+# Fechas: {FH+4} = dentro de 4 días a las 09:00  (la convocatoria exige 48 h de anticipación)
+
+# --- Sistema ---
+HELP
+HELP["CU3"]
+CARGARDEMO
+ESTADOSISTEMA
+
+# --- CU1 Usuarios ---
+OBTENERROLES
+OBTENERUSUARIOS["*"]
+REGISTRARUSUARIO["9876543","Pedro","Lopez","pedro.lopez@gmail.com","SECRETARIO"]
+REGISTRARUSUARIO["9876543","Pedro","Lopez","otro@gmail.com","SECRETARIO"]
+MODIFICARUSUARIO["9876543","correo","pedro.nuevo@gmail.com"]
+OBTENERUSUARIO["9876543"]
+ELIMINARUSUARIO["9876543"]
+OBTENERUSUARIOS["INACTIVO"]
+
+# --- CU2 Miembros y quórum ---
+OBTENERMIEMBROS
+OBTENERMANDATOS["VIGENTE"]
+CALCULARQUORUM
+
+# --- CU3 Convocatoria, excusas y suplentes ---
+REGISTRARSESION["2020-01-01 09:00","Sala del Consejo","ORDINARIA"]
+REGISTRARSESION["{FH+4}","Sala del Consejo","EXTRAORDINARIA"]
+REGISTRARSESION["{FH+4}","Sala del Consejo","ORDINARIA","","Informe del decano;Aprobación del reglamento interno"]
+OBTENERSESIONES["PROGRAMADA"]
+OBTENERSESION["1"]
+REGISTRAREXCUSA["3000001","1","Viaje por comisión de servicio"]
+OBTENEREXCUSAS["1"]
+OBTENERHABILITADOS["1"]
+
+# --- CU4 Documentos y workflow ---
+REGISTRARDOCUMENTO["Reglamento interno","2000002","1","RESOLUCION","Texto del proyecto de reglamento interno..."]
+REGISTRARVERSION["1","Texto corregido del reglamento interno..."]
+OBTENERVERSIONES["1"]
+AVANZARDOCUMENTO["1","3000003","Intento con rol equivocado"]
+AVANZARDOCUMENTO["1","2000002","Documento recibido"]
+AVANZARDOCUMENTO["1","2000002","Revisión técnica sin observaciones"]
+AVANZARDOCUMENTO["1","2000001","Visto bueno del Presidente"]
+OBTENERDOCUMENTO["1"]
+OBTENERHISTORIALDOCUMENTO["1"]
+OBTENERTRAMITES
+
+# --- CU5 Asistencia, quórum y votación ---
+REGISTRARASISTENCIA["3000001","1"]
+REGISTRARASISTENCIA["3000002","1"]
+INICIARSESION["1"]
+REGISTRARASISTENCIA["2000001","1"]
+REGISTRARASISTENCIA["3000003","1"]
+CALCULARQUORUM["1"]
+INICIARSESION["1"]
+REGISTRARASISTENCIA["4000001","1"]
+OBTENERASISTENCIA["1"]
+REGISTRARVOTO["2000001","1","1","A_FAVOR"]
+REGISTRARVOTO["3000002","1","1","A_FAVOR"]
+REGISTRARVOTO["3000003","1","1","EN_CONTRA"]
+REGISTRARVOTO["4000001","1","1","A_FAVOR"]
+REGISTRARVOTO["4000001","1","1","EN_CONTRA"]
+OBTENERVOTOS["1","1"]
+
+# --- CU6 Resoluciones, veto y acta ---
+EMITIRRESOLUCION["1","1","ABSOLUTA"]
+OBTENERRESOLUCIONES["*"]
+VETARRESOLUCION["1","2000001","Observaciones de forma"]
+SUPERARVETO["1"]
+PROMULGARRESOLUCION["1","2000001"]
+FINALIZARSESION["1"]
+GENERARACTA["1","Sesión sin incidentes"]
+OBTENERACTA["1"]
+
+# --- CU7 Gaceta, fiscalización y auditoría ---
+PUBLICARGACETA["1"]
+OBTENERGACETA["*"]
+VERIFICARACTA["1"]
+FISCALIZARSESION["1"]
+OBTENERAUDITORIA["10"]
+
+# --- CU8 Reportes ---
+REPORTEASISTENCIA
+REPORTEASISTENCIA["1"]
+REPORTEVOTACIONES
+REPORTERESOLUCIONES
+REPORTEEXCUSAS
+REPORTEDOCUMENTOS
+REPORTEGENERAL
+
+# --- Respaldo ---
+RESPALDAR
+OBTENERRESPALDOS
+
+# --- Errores de sintaxis y de uso ---
+obtenerusuarios [ "*" ]
+OBTENERUSUARIOS["*
+LISTUSU["*"]
+REGISTRARUSUARIO["1"]
+REGISTRARUSUARIO["5555555","Ana","O\"Brien","ana.ob@gmail.com","SECRETARIO"]
+OBTENERUSUARIO["5555555"]

@@ -1,0 +1,6 @@
+config.properties
+logs/
+backups/
+bin/
+*.class
+.settings/

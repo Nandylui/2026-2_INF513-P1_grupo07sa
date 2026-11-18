@@ -1,0 +1,105 @@
+<html><head><meta charset="UTF-8"><title>Sistema Consejo Facultativo - Comandos de prueba</title></head><body style="font-family:Arial,sans-serif;font-size:14px;color:#222">
+<h2>Sistema Vía Mail Básico - Consejo Facultativo (GRUPO07SA)</h2>
+<p><b>INF513 Tecnología Web</b> - Primer parcial. Enviar cada comando <b>en el asunto</b> del correo a <b>grupo07sa@tecnoweb.org.bo</b>. La respuesta llega al mismo correo del remitente.</p>
+<p>Formato: <code>COMANDO["param1","param2",...]</code>. El nombre del comando no distingue mayúsculas. Fechas: <code>AAAA-MM-DD HH:mm</code>. Enviar <code>AYUDA</code> para ver la lista completa.</p>
+<h3>CU1 - Gestionar Usuarios</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>OBTENERROLES</code></td><td>Lista los roles del sistema</td><td><code>OBTENERROLES</code></td></tr>
+<tr><td><code>OBTENERUSUARIOS[filtro]</code></td><td>Lista usuarios. Filtro opcional: * (todos), un ROL (ej. SECRETARIO) o un ESTADO (ACTIVO/INACTIVO)</td><td><code>OBTENERUSUARIOS[&quot;*&quot;]</code></td></tr>
+<tr><td><code>OBTENERUSUARIO[ci]</code></td><td>Muestra los datos de un usuario por su CI</td><td><code>OBTENERUSUARIO[&quot;9876543&quot;]</code></td></tr>
+<tr><td><code>REGISTRARUSUARIO[ci,nombres,apellidos,correo,rol]</code></td><td>Registra un usuario con su rol (ver OBTENERROLES)</td><td><code>REGISTRARUSUARIO[&quot;9876543&quot;,&quot;Maria&quot;,&quot;Gomez&quot;,&quot;maria@gmail.com&quot;,&quot;SECRETARIO&quot;]</code></td></tr>
+<tr><td><code>MODIFICARUSUARIO[ci,campo,valor]</code></td><td>Modifica un campo del usuario: nombres, apellidos, correo, rol o estado</td><td><code>MODIFICARUSUARIO[&quot;9876543&quot;,&quot;correo&quot;,&quot;maria.nuevo@gmail.com&quot;]</code></td></tr>
+<tr><td><code>ELIMINARUSUARIO[ci]</code></td><td>Da de baja (INACTIVO) a un usuario. No se borra para conservar el historial</td><td><code>ELIMINARUSUARIO[&quot;9876543&quot;]</code></td></tr>
+</table>
+<h3>CU2 - Gestionar Miembros y Quórum</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>OBTENERMIEMBROS</code></td><td>Lista los miembros vigentes del Consejo (titular y suplente por carrera/estamento)</td><td><code>OBTENERMIEMBROS</code></td></tr>
+<tr><td><code>OBTENERMANDATOS[filtro]</code></td><td>Lista mandatos (historial). Filtro opcional: * , VIGENTE, CONCLUIDO o una carrera</td><td><code>OBTENERMANDATOS[&quot;VIGENTE&quot;]</code></td></tr>
+<tr><td><code>REGISTRARMANDATO[ci_titular,ci_suplente,carrera,fecha_inicio,fecha_fin]</code></td><td>Registra un mandato de 2 años (titular + suplente de la misma carrera y estamento). Suplente: CI o NINGUNO</td><td><code>REGISTRARMANDATO[&quot;3000001&quot;,&quot;3000002&quot;,&quot;INFORMATICA&quot;,&quot;2026-01-01&quot;,&quot;2027-12-31&quot;]</code></td></tr>
+<tr><td><code>MODIFICARMANDATO[id_mandato,campo,valor]</code></td><td>Modifica un mandato: ci_suplente (o NINGUNO), fecha_fin o estado (VIGENTE/CONCLUIDO)</td><td><code>MODIFICARMANDATO[&quot;1&quot;,&quot;ci_suplente&quot;,&quot;3000002&quot;]</code></td></tr>
+<tr><td><code>ELIMINARMANDATO[id_mandato]</code></td><td>Concluye un mandato (pasa a CONCLUIDO; se conserva en el historial)</td><td><code>ELIMINARMANDATO[&quot;1&quot;]</code></td></tr>
+<tr><td><code>CALCULARQUORUM[id_sesion]</code></td><td>Calcula el quórum (mayoría absoluta). Con id_sesion indica además si ya se alcanzó</td><td><code>CALCULARQUORUM[&quot;1&quot;]</code></td></tr>
+</table>
+<h3>CU3 - Convocatorias, Excusas y Suplentes</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>OBTENERSESIONES[filtro]</code></td><td>Lista sesiones. Filtro opcional: * , estado (PROGRAMADA, EN_CURSO, FINALIZADA, CANCELADA) o tipo (ORDINARIA, EXTRAORDINARIA)</td><td><code>OBTENERSESIONES[&quot;PROGRAMADA&quot;]</code></td></tr>
+<tr><td><code>OBTENERSESION[id_sesion]</code></td><td>Detalle de una sesión: datos, orden del día y documentos</td><td><code>OBTENERSESION[&quot;1&quot;]</code></td></tr>
+<tr><td><code>REGISTRARSESION[fecha_hora,lugar,tipo,solicitantes,orden_dia]</code></td><td>Convoca una sesión (ordinaria o extraordinaria) con 48 h de anticipación. Extraordinaria: solicitantes = CI del Presidente o al menos 3 CI de consejeros separados por ;  orden_dia = puntos separados por ;  (use &quot;&quot; para omitir un parámetro)</td><td><code>REGISTRARSESION[&quot;2027-03-10 09:30&quot;,&quot;Sala del Consejo&quot;,&quot;ORDINARIA&quot;,&quot;&quot;,&quot;Informe del decano;Aprobar POA&quot;]</code></td></tr>
+<tr><td><code>MODIFICARSESION[id_sesion,campo,valor]</code></td><td>Modifica una sesión PROGRAMADA: lugar, fecha_hora u orden_dia (puntos separados por ;)</td><td><code>MODIFICARSESION[&quot;1&quot;,&quot;lugar&quot;,&quot;Auditorio&quot;]</code></td></tr>
+<tr><td><code>ELIMINARSESION[id_sesion]</code></td><td>Cancela una sesión PROGRAMADA (queda registrada como CANCELADA)</td><td><code>ELIMINARSESION[&quot;1&quot;]</code></td></tr>
+<tr><td><code>OBTENEREXCUSAS[id_sesion]</code></td><td>Lista excusas (todas o de una sesión)</td><td><code>OBTENEREXCUSAS[&quot;1&quot;]</code></td></tr>
+<tr><td><code>REGISTRAREXCUSA[ci_titular,id_sesion,motivo]</code></td><td>Registra la excusa de un titular y habilita automáticamente a su suplente para esa sesión</td><td><code>REGISTRAREXCUSA[&quot;3000001&quot;,&quot;1&quot;,&quot;Viaje por comisión de servicio&quot;]</code></td></tr>
+<tr><td><code>ELIMINAREXCUSA[id_excusa]</code></td><td>Anula una excusa (el suplente deja de estar habilitado) mientras la sesión esté PROGRAMADA</td><td><code>ELIMINAREXCUSA[&quot;1&quot;]</code></td></tr>
+<tr><td><code>OBTENERHABILITADOS[id_sesion]</code></td><td>Quiénes pueden asistir/votar en una sesión (titulares sin excusa, suplentes habilitados y Presidente)</td><td><code>OBTENERHABILITADOS[&quot;1&quot;]</code></td></tr>
+</table>
+<h3>CU4 - Repositorio Documental y Workflow</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>OBTENERTRAMITES</code></td><td>Lista los tipos de trámite y sus pasos de aprobación (workflow)</td><td><code>OBTENERTRAMITES</code></td></tr>
+<tr><td><code>OBTENERDOCUMENTOS[filtro]</code></td><td>Lista documentos. Filtro opcional: * , un ESTADO, EXTEMPORANEO o el número de una sesión</td><td><code>OBTENERDOCUMENTOS[&quot;RECIBIDO&quot;]</code></td></tr>
+<tr><td><code>OBTENERDOCUMENTO[id_documento]</code></td><td>Detalle de un documento: datos, paso actual del flujo y versiones</td><td><code>OBTENERDOCUMENTO[&quot;1&quot;]</code></td></tr>
+<tr><td><code>REGISTRARDOCUMENTO[titulo,ci_remitente,id_sesion,tramite,contenido]</code></td><td>Recibe un documento para una sesión. Si llega con menos de 48 h de anticipación queda como EXTEMPORÁNEO. tramite (opcional): GENERAL, RESOLUCION, INFORME. contenido (opcional): crea la versión 1 con su hash SHA-256</td><td><code>REGISTRARDOCUMENTO[&quot;Proyecto de reglamento&quot;,&quot;2000002&quot;,&quot;1&quot;,&quot;RESOLUCION&quot;,&quot;Texto del proyecto...&quot;]</code></td></tr>
+<tr><td><code>MODIFICARDOCUMENTO[id_documento,campo,valor]</code></td><td>Modifica titulo, descripcion o id_sesion (reprograma el documento a otra sesión) mientras no esté APROBADO/RECHAZADO</td><td><code>MODIFICARDOCUMENTO[&quot;1&quot;,&quot;titulo&quot;,&quot;Nuevo título&quot;]</code></td></tr>
+<tr><td><code>ELIMINARDOCUMENTO[id_documento]</code></td><td>Anula un documento (estado ANULADO) si todavía no tiene votos</td><td><code>ELIMINARDOCUMENTO[&quot;1&quot;]</code></td></tr>
+<tr><td><code>AVANZARDOCUMENTO[id_documento,ci_responsable,observacion]</code></td><td>Workflow: completa el paso pendiente del trámite (lo debe hacer el rol responsable). Al terminar el último paso el documento queda APROBADO</td><td><code>AVANZARDOCUMENTO[&quot;1&quot;,&quot;2000002&quot;,&quot;Revisado sin observaciones&quot;]</code></td></tr>
+<tr><td><code>RECHAZARDOCUMENTO[id_documento,ci_responsable,motivo]</code></td><td>Workflow: rechaza el documento en el paso pendiente (queda RECHAZADO)</td><td><code>RECHAZARDOCUMENTO[&quot;1&quot;,&quot;2000002&quot;,&quot;Falta firma del decano&quot;]</code></td></tr>
+<tr><td><code>REGISTRARVERSION[id_documento,contenido]</code></td><td>Guarda una nueva versión del documento con su huella SHA-256</td><td><code>REGISTRARVERSION[&quot;1&quot;,&quot;Texto actualizado...&quot;]</code></td></tr>
+<tr><td><code>OBTENERVERSIONES[id_documento]</code></td><td>Lista las versiones de un documento</td><td><code>OBTENERVERSIONES[&quot;1&quot;]</code></td></tr>
+<tr><td><code>OBTENERHISTORIALDOCUMENTO[id_documento]</code></td><td>Trazabilidad del documento: cambios de estado y quién los hizo</td><td><code>OBTENERHISTORIALDOCUMENTO[&quot;1&quot;]</code></td></tr>
+</table>
+<h3>CU5 - Asistencia, Quórum y Votaciones</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>REGISTRARASISTENCIA[ci,id_sesion]</code></td><td>Registra la asistencia (huella del reloj biométrico). Solo cuentan titulares sin excusa, suplentes habilitados y el Presidente</td><td><code>REGISTRARASISTENCIA[&quot;3000001&quot;,&quot;1&quot;]</code></td></tr>
+<tr><td><code>OBTENERASISTENCIA[id_sesion]</code></td><td>Lista de asistentes de una sesión y estado del quórum</td><td><code>OBTENERASISTENCIA[&quot;1&quot;]</code></td></tr>
+<tr><td><code>INICIARSESION[id_sesion]</code></td><td>Abre la sesión si hay quórum (mayoría absoluta de asistentes). Pasa a EN_CURSO</td><td><code>INICIARSESION[&quot;1&quot;]</code></td></tr>
+<tr><td><code>FINALIZARSESION[id_sesion]</code></td><td>Cierra la sesión EN_CURSO (pasa a FINALIZADA)</td><td><code>FINALIZARSESION[&quot;1&quot;]</code></td></tr>
+<tr><td><code>REGISTRARVOTO[ci,id_sesion,id_documento,voto]</code></td><td>Registra el voto de un consejero presente sobre un documento. voto: A_FAVOR, EN_CONTRA o ABSTENCION (un voto por persona)</td><td><code>REGISTRARVOTO[&quot;3000001&quot;,&quot;1&quot;,&quot;1&quot;,&quot;A_FAVOR&quot;]</code></td></tr>
+<tr><td><code>OBTENERVOTOS[id_sesion,id_documento]</code></td><td>Votos emitidos sobre un documento y su recuento</td><td><code>OBTENERVOTOS[&quot;1&quot;,&quot;1&quot;]</code></td></tr>
+</table>
+<h3>CU6 - Resoluciones, Veto y Actas</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>EMITIRRESOLUCION[id_sesion,id_documento,tipo_mayoria,numero]</code></td><td>Cierra la votación de un documento y emite la resolución. tipo_mayoria: ABSOLUTA (por defecto) o DOS_TERCIOS. numero opcional (si se omite se genera RES-AAAA-###)</td><td><code>EMITIRRESOLUCION[&quot;1&quot;,&quot;1&quot;,&quot;ABSOLUTA&quot;]</code></td></tr>
+<tr><td><code>OBTENERRESOLUCIONES[filtro]</code></td><td>Lista resoluciones. Filtro opcional: * o estado (EMITIDA, RECHAZADA, PROMULGADA, VETADA, SUPERADO_VETO, PUBLICADA)</td><td><code>OBTENERRESOLUCIONES[&quot;*&quot;]</code></td></tr>
+<tr><td><code>OBTENERRESOLUCION[id_resolucion]</code></td><td>Detalle de una resolución</td><td><code>OBTENERRESOLUCION[&quot;1&quot;]</code></td></tr>
+<tr><td><code>PROMULGARRESOLUCION[id_resolucion,ci_presidente]</code></td><td>El Presidente promulga una resolución aprobada dentro de 5 días hábiles (o con el veto superado)</td><td><code>PROMULGARRESOLUCION[&quot;1&quot;,&quot;2000001&quot;]</code></td></tr>
+<tr><td><code>VETARRESOLUCION[id_resolucion,ci_presidente,motivo]</code></td><td>El Presidente veta una resolución EMITIDA dentro de 5 días hábiles</td><td><code>VETARRESOLUCION[&quot;1&quot;,&quot;2000001&quot;,&quot;Contraviene el estatuto&quot;]</code></td></tr>
+<tr><td><code>SUPERARVETO[id_resolucion]</code></td><td>Intenta superar el veto: requiere los 2/3 de los presentes a favor</td><td><code>SUPERARVETO[&quot;1&quot;]</code></td></tr>
+<tr><td><code>GENERARACTA[id_sesion,observaciones]</code></td><td>Genera el acta de una sesión FINALIZADA (asistentes, quórum, documentos, votos y resoluciones) con su huella SHA-256 inalterable</td><td><code>GENERARACTA[&quot;1&quot;,&quot;Sin observaciones&quot;]</code></td></tr>
+<tr><td><code>OBTENERACTA[id_sesion]</code></td><td>Muestra el acta de una sesión</td><td><code>OBTENERACTA[&quot;1&quot;]</code></td></tr>
+</table>
+<h3>CU7 - Fiscalizar, Auditar y Publicar Gaceta</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>PUBLICARGACETA[id_resolucion]</code></td><td>Publica en la Gaceta una resolución PROMULGADA (queda PUBLICADA)</td><td><code>PUBLICARGACETA[&quot;1&quot;]</code></td></tr>
+<tr><td><code>OBTENERGACETA[numero]</code></td><td>Lista las publicaciones de la Gaceta, o muestra una por su número (ej. GAC-2026-001)</td><td><code>OBTENERGACETA[&quot;*&quot;]</code></td></tr>
+<tr><td><code>VERIFICARACTA[id_sesion]</code></td><td>Audita la integridad del acta: recalcula el SHA-256 y lo compara con el guardado</td><td><code>VERIFICARACTA[&quot;1&quot;]</code></td></tr>
+<tr><td><code>FISCALIZARSESION[id_sesion]</code></td><td>Fiscaliza el cumplimiento normativo de una sesión (convocatoria, quórum, votos, plazos, acta, Gaceta)</td><td><code>FISCALIZARSESION[&quot;1&quot;]</code></td></tr>
+<tr><td><code>OBTENERAUDITORIA[limite,filtro]</code></td><td>Bitácora de auditoría: últimos comandos procesados (limite por defecto 20, máx 100). filtro opcional: correo o comando</td><td><code>OBTENERAUDITORIA[&quot;20&quot;,&quot;REGISTRARVOTO&quot;]</code></td></tr>
+</table>
+<h3>CU8 - Reportes</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>REPORTEASISTENCIA[id_sesion]</code></td><td>Reporte de asistencia: resumen por sesión, o detalle de una sesión</td><td><code>REPORTEASISTENCIA[&quot;1&quot;]</code></td></tr>
+<tr><td><code>REPORTEVOTACIONES[id_sesion]</code></td><td>Reporte de votaciones por documento (todas las sesiones o una)</td><td><code>REPORTEVOTACIONES[&quot;1&quot;]</code></td></tr>
+<tr><td><code>REPORTERESOLUCIONES[estado]</code></td><td>Reporte de resoluciones con conteo por estado; filtro opcional por estado</td><td><code>REPORTERESOLUCIONES[&quot;PROMULGADA&quot;]</code></td></tr>
+<tr><td><code>REPORTEEXCUSAS[desde,hasta]</code></td><td>Reporte de excusas por consejero en un rango de fechas (AAAA-MM-DD, opcional)</td><td><code>REPORTEEXCUSAS[&quot;2026-01-01&quot;,&quot;2026-12-31&quot;]</code></td></tr>
+<tr><td><code>REPORTEDOCUMENTOS[estado]</code></td><td>Reporte del repositorio documental: conteo por estado y extemporáneos</td><td><code>REPORTEDOCUMENTOS</code></td></tr>
+<tr><td><code>REPORTEGENERAL</code></td><td>Resumen general del sistema (totales de cada módulo)</td><td><code>REPORTEGENERAL</code></td></tr>
+</table>
+<h3>Sistema (ayuda, estado y respaldo)</h3>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse;width:100%">
+<tr style="background:#e8eef7"><th align="left">COMANDO</th><th align="left">DESCRIPCION</th><th align="left">EJEMPLO</th></tr>
+<tr><td><code>AYUDA[tema]</code></td><td>Muestra los comandos disponibles. Tema opcional: un CU (CU1..CU8), SISTEMA o el nombre de un comando</td><td><code>AYUDA</code></td></tr>
+<tr><td><code>ESTADOSISTEMA</code></td><td>Estado del sistema: base de datos en uso, contingencia, correo, reglas y respaldos</td><td><code>ESTADOSISTEMA</code></td></tr>
+<tr><td><code>RESPALDAR</code></td><td>Crea ahora un respaldo de todos los datos (carpeta backups/)</td><td><code>RESPALDAR</code></td></tr>
+<tr><td><code>OBTENERRESPALDOS</code></td><td>Lista los respaldos disponibles</td><td><code>OBTENERRESPALDOS</code></td></tr>
+<tr><td><code>RESTAURAR[archivo]</code></td><td>Restaura los datos desde un respaldo (el más reciente si no se indica). Deshabilitado por correo salvo seguridad.permitir_restaurar_por_correo=true; por defecto se hace desde la consola con main.Respaldo</td><td><code>RESTAURAR[&quot;respaldo_20261117_101500.sql&quot;]</code></td></tr>
+<tr><td><code>INICIALIZARBD</code></td><td>Recrea las tablas que falten y los datos base (no borra datos existentes)</td><td><code>INICIALIZARBD</code></td></tr>
+<tr><td><code>CARGARDEMO</code></td><td>Carga datos de demostración (presidente, secretario y 4 consejeros con suplentes) para probar los comandos</td><td><code>CARGARDEMO</code></td></tr>
+</table>
+<p style="color:#666">Generado automáticamente desde el catálogo de comandos del sistema.</p></body></html>

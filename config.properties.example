@@ -1,0 +1,63 @@
+# ============================================================
+#  Sistema Consejo Facultativo - GRUPO07SA  (INF513 Tecnologia Web)
+#  Configuracion unica. NO hace falta tocar codigo Java.
+# ============================================================
+
+# ---- PERFIL ----------------------------------------------------
+# local  = PostgreSQL de tu PC (pruebas mientras el ing. no habilita tu IP)
+# remoto = PostgreSQL del servidor de la materia (cuando te habiliten la IP)
+perfil=local
+
+# Si el perfil principal falla (servidor tumbado), usa el perfil de respaldo automaticamente.
+bd.contingencia=true
+
+# ---- BASE DE DATOS LOCAL --------------------------------------
+bd.local.url=jdbc:postgresql://localhost:5432/db_prueba_tecno
+bd.local.usuario=postgres
+bd.local.clave=TU_CLAVE_POSTGRES
+
+# ---- BASE DE DATOS REMOTA (servidor de la materia) ------------
+# El ing. indica el servidor db.tecnoweb.org.bo; el ejemplo de Diego usa mail.tecnoweb.org.bo.
+# Si uno no conecta, prueba con el otro (cambia solo el host).
+bd.remoto.url=jdbc:postgresql://mail.tecnoweb.org.bo:5432/db_grupo07sa
+bd.remoto.usuario=grupo07sa
+bd.remoto.clave=CLAVE_BD_GRUPO
+
+bd.timeout_conexion_seg=8
+bd.timeout_consulta_seg=30
+
+# ---- CORREO ---------------------------------------------------
+correo.host=mail.tecnoweb.org.bo
+correo.pop3.puerto=110
+correo.smtp.puerto=25
+correo.ssl=false
+correo.smtp.auth=false
+correo.direccion=grupo07sa@tecnoweb.org.bo
+# usuario POP3 sin dominio
+correo.usuario=grupo07sa
+correo.clave=CLAVE_CORREO_GRUPO
+# cada cuantos segundos se revisa el buzon
+correo.intervalo_segundos=30
+# true = imprime el dialogo POP3/SMTP en consola (solo para depurar)
+correo.debug=false
+# Si se llena, TODAS las respuestas se envian a esa direccion (pruebas). Vacio = responde al remitente.
+correo.destino_forzado=
+
+# ---- RESPALDO Y RECUPERACION ----------------------------------
+backup.carpeta=backups
+backup.intervalo_minutos=60
+backup.conservar=10
+# Si la BD aparece vacia (el ing. la limpio), se restaura sola desde el ultimo respaldo.
+backup.auto_restaurar_si_vacia=true
+
+# ---- LOGS Y SQL -----------------------------------------------
+logs.carpeta=logs
+sql.carpeta=database
+
+# ---- SEGURIDAD / REGLAS ---------------------------------------
+# false = cualquier remitente puede ejecutar comandos (modo pruebas del parcial)
+# true  = solo usuarios registrados, segun su rol (requiere un ADMINISTRADOR registrado con ese correo)
+seguridad.validar_remitente=false
+seguridad.permitir_restaurar_por_correo=false
+reglas.anticipacion_horas=48
+reglas.exigir_workflow_para_votar=true
