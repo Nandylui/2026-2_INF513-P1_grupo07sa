@@ -88,6 +88,31 @@ REPORTEEXCUSAS
 REPORTEDOCUMENTOS
 REPORTEGENERAL
 
+# --- Comandos restantes: mandatos, sesiones, documentos y sistema ---
+# (se ejecutan después de las secciones anteriores: los ID de sesión, documento y mandato dependen de ese orden)
+REGISTRARUSUARIO["8000001","Nelson","Rojas","nelson.rojas@gmail.com","TITULAR_DOCENTE"]
+REGISTRARUSUARIO["8000002","Elena","Paz","elena.paz@gmail.com","SUPLENTE_DOCENTE"]
+REGISTRARMANDATO["8000001","8000002","REDES","2026-11-19","2030-01-01"]
+REGISTRARMANDATO["8000001","8000002","REDES","2026-11-19","2028-11-18"]
+MODIFICARMANDATO["5","ci_suplente","NINGUNO"]
+MODIFICARMANDATO["5","fecha_fin","2028-06-30"]
+ELIMINARMANDATO["5"]
+REGISTRARSESION["{FH+5}","Auditorio","ORDINARIA"]
+MODIFICARSESION["2","lugar","Sala de Videoconferencias"]
+REGISTRAREXCUSA["3000003","2","Reunión de carrera"]
+ELIMINAREXCUSA["2"]
+ELIMINARSESION["2"]
+REGISTRARSESION["{FH+6}","Sala del Consejo","ORDINARIA"]
+REGISTRARDOCUMENTO["Informe de gestión","2000002","3","INFORME","Contenido del informe de gestión"]
+OBTENERDOCUMENTOS["*"]
+MODIFICARDOCUMENTO["2","titulo","Informe de gestión 2026"]
+RECHAZARDOCUMENTO["2","2000002","Falta información"]
+REGISTRARDOCUMENTO["Convenio marco","2000002","3"]
+ELIMINARDOCUMENTO["3"]
+OBTENERRESOLUCION["1"]
+INICIALIZARBD
+RESTAURAR
+
 # --- Respaldo ---
 RESPALDAR
 OBTENERRESPALDOS

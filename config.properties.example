@@ -25,6 +25,9 @@ bd.remoto.clave=CLAVE_BD_GRUPO
 
 bd.timeout_conexion_seg=8
 bd.timeout_consulta_seg=30
+# Si ni la BD remota ni la local responden, tras cuantos ciclos de lectura se le responde al usuario un ERROR
+# de "base de datos no disponible" (y se descarta ese correo). Opcional: por defecto 2.
+bd.intentos_antes_de_avisar=2
 
 # ---- CORREO ---------------------------------------------------
 correo.host=mail.tecnoweb.org.bo
@@ -40,6 +43,12 @@ correo.clave=CLAVE_CORREO_GRUPO
 correo.intervalo_segundos=30
 # true = imprime el dialogo POP3/SMTP en consola (solo para depurar)
 correo.debug=false
+
+# Si el servidor SMTP rechaza una respuesta (ej. lo marca como spam), se reintenta el envío de forma acotada:
+# máximo 'reintentos_envio' intentos en total, esperando 'espera_reintento_seg' x (nro de intento) entre ellos.
+# Superado el máximo se registra el error en logs/error.log y el correo se descarta (el comando ya se ejecutó).
+correo.reintentos_envio=3
+correo.espera_reintento_seg=120
 # Si se llena, TODAS las respuestas se envian a esa direccion (pruebas). Vacio = responde al remitente.
 correo.destino_forzado=
 

@@ -11,9 +11,9 @@ public final class Auditoria {
                     "INSERT INTO auditoria (remitente, comando, parametros, resultado, detalle) VALUES (?,?,?,?,?)",
                     cortar(remitente, 150), cortar(comando, 80), cortar(parametros, 500),
                     exito ? "EXITO" : "ERROR", cortar(detalle, 500));
-        } catch (DbNoDisponibleException e) {
-            throw e;
         } catch (Exception e) {
+            // La auditoría nunca debe alterar el resultado de un comando ya procesado (ni provocar que se
+            // reejecute porque la BD se cayó justo después): solo se anota en error.log.
             util.AppLogger.error("No se pudo registrar auditoría", e);
         }
     }
