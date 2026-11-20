@@ -75,6 +75,27 @@ Scripts en `database/`:
 
 El sistema crea las tablas y los datos base **solo** al conectarse (`DatabaseInitializer`).
 
+### Cargar los datos de ejemplo (CARGARDEMO)
+
+Al clonar el proyecto y arrancarlo por primera vez, la base queda con las tablas y los datos base (roles, tipos de trámite y sus flujos), pero **sin usuarios, mandatos ni sesiones**. Para probar los comandos hay que cargar los datos de demostración con el comando:
+
+```
+CARGARDEMO
+```
+
+Se envía como asunto de un correo a la cuenta del sistema, o se escribe en la consola de `main.SimuladorComandos`. Lee `database/datos_demo.sql` e inserta, sin duplicar si se repite, a estos actores ficticios:
+
+| CI | Rol |
+|----|-----|
+| 1000001 | ADMINISTRADOR |
+| 2000001 | PRESIDENTE (Roberto Vargas Peña) |
+| 2000002 | SECRETARIO (Maria Gomez Rojas) |
+| 3000001, 3000003 | TITULAR_DOCENTE (Carlos Mendez Soria, Jorge Salvatierra Paz) |
+| 3000002, 3000004 | SUPLENTE_DOCENTE (Lucia Fernandez Ortiz, Ana Quiroga Lima) |
+| 4000001 | Representante estudiantil (Diego Rivero Cuellar) |
+
+Los correos de la demo son ficticios (`*@consejo.test`); para recibir respuestas en un correo real se usa `REGISTRARUSUARIO` o `MODIFICARUSUARIO`. Con `seguridad.validar_remitente=false` (valor por defecto) cualquier remitente puede ejecutar `CARGARDEMO`; con `true` solo un ADMINISTRADOR. El guion `database/guion_pruebas.txt` ya lo ejecuta al inicio.
+
 ## 3. Instalación y configuración
 
 Requisitos: JDK 17+ (STS usa JavaSE-25), PostgreSQL, y los jars de `lib/` (`javax.mail-1.6.2`, `activation-1.1.1`, `postgresql-42.7.1`).
@@ -83,6 +104,7 @@ Requisitos: JDK 17+ (STS usa JavaSE-25), PostgreSQL, y los jars de `lib/` (`java
 2. Crear la BD local (`db_prueba_tecno`) en PostgreSQL.
 3. Copiar `config.properties.example` a `config.properties` y completar claves.
 4. Ejecutar `main.SistemaPrincipal` (Run As > Java Application).
+5. Enviar por correo el comando `CARGARDEMO` (ver la sección 2) para tener usuarios de ejemplo, y luego `HELP` para ver todos los comandos. Sin correo: ejecutar `main.SimuladorComandos` y escribir `CARGARDEMO`.
 
 ### Pasar de local a remoto (cuando habiliten la IP)
 
